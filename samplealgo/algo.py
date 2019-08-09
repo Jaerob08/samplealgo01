@@ -106,7 +106,7 @@ def get_orders(api, price_df, position_size=10000, max_positions=5):
     to_sell = holding_symbol - to_buy
     to_buy = to_buy - holding_symbol
     orders = []
-
+    
     # if a stock is in the portfolio, and not in the desired
     # portfolio, sell it
     for symbol in to_sell:
@@ -204,12 +204,11 @@ def main():
         # the boolean flag for market open
         clock = api.get_clock()
         now = clock.timestamp
-        clock.is_open = True
         if clock.is_open and done != now.strftime('%Y-%m-%d'):
 
             price_df = prices(Universe)
             orders = get_orders(api, price_df)
-            #trade(orders)
+            trade(orders)
 
             # flag it as done so it doesn't work again for the day
             # TODO: this isn't tolerant to process restarts, so this
